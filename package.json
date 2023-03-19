@@ -1,0 +1,26 @@
+{
+  "name": "dict-terminal",
+  "version": "1.0.0",
+  "description": "海词查询",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mannixchan/dict-terminal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mannixchan/dict-terminal/issues"
+  },
+  "homepage": "https://github.com/mannixchan/dict-terminal#readme",
+  "dependencies": {
+    "axios": "^1.3.4",
+    "cheerio": "^1.0.0-rc.12",
+    "commander": "^10.0.0"
+  }
+}
