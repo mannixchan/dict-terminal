@@ -26,7 +26,29 @@ function getOutput(word, html) {
     const item = $('.dict-basic-ul li').has('strong').eq(i);
     meaning += (item.children('span').text() + item.children('strong').text() + '\n')
   }
+  meaning = getMean('#dict-chart-basic', meaning, $)
+  meaning = getMean('##dict-chart-examples', meaning, $)
+  
   console.log(meaning);
+}
 
-
+function getMean(id, meaning, $){
+  try {
+    let e = $(id)
+    if (!e) return
+    let d = e.attr('data')
+    d = decodeURIComponent(d)
+    d = JSON.parse(d)
+    let arr = Object.values(d)
+    if (arr && arr.length > 0) {
+      for (let v of arr) {
+        let {sense, percent, pos} = v
+        meaning += `${sense || pos || ''}${percent}%  `
+      }
+      if (meaning) meaning += '\n'
+    }
+    
+  } catch (e) {
+  }
+  return meaning
 }
