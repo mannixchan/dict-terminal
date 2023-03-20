@@ -2,6 +2,10 @@ const program = require('commander')
 const cheerio = require('cheerio')
 const axios = require('axios')
 const pkg = require('./package.json');
+const chalk = require('chalk')
+
+const yellow = chalk.keyword('orange')
+const bgGrey = chalk.bgGrey
 
 program
   .name('hc-海词查询')
@@ -18,18 +22,21 @@ axios.get('http://dict.cn/' + word)
 
 
 function getOutput(word, html) {
-  const cheerio = require('cheerio')
   const $ = cheerio.load(html)
   const pronounce = $('[lang="EN-US"]').last().text();
-  let meaning = pronounce + '\n'
+  console.log(bgGrey(pronounce));
+  let meaning = '';
   for(let i = 0; i < $('.dict-basic-ul li').has('strong').length; i++){
     const item = $('.dict-basic-ul li').has('strong').eq(i);
     meaning += (item.children('span').text() + item.children('strong').text() + '\n')
   }
+
+  console.log(yellow(meaning.slice(0, meaning.length -1)));
+  meaning = ''
   meaning = getMean('#dict-chart-basic', meaning, $)
   meaning = getMean('##dict-chart-examples', meaning, $)
   
-  console.log(meaning);
+  console.log(chalk.green(meaning));
 }
 
 function getMean(id, meaning, $){
@@ -45,7 +52,7 @@ function getMean(id, meaning, $){
         let {sense, percent, pos} = v
         meaning += `${sense || pos || ''}${percent}%  `
       }
-      if (meaning) meaning += '\n'
+      if (meaning) meaning += ''
     }
     
   } catch (e) {
